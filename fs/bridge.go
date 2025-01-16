@@ -609,7 +609,7 @@ func (b *rawBridge) Rename(cancel <-chan struct{}, input *fuse.RenameIn, oldName
 	p2, _ := b.inode(input.Newdir, 0)
 
 	if mops, ok := p1.ops.(NodeRenamer); ok {
-		errno := mops.Rename(&fuse.Context{Caller: input.Caller, Cancel: cancel}, oldName, p2.ops, newName, input.Flags)
+		errno, newName := mops.Rename(&fuse.Context{Caller: input.Caller, Cancel: cancel}, oldName, p2.ops, newName, input.Flags)
 		if errno == 0 {
 			if input.Flags&RENAME_EXCHANGE != 0 {
 				p1.ExchangeChild(oldName, p2, newName)

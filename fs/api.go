@@ -561,9 +561,10 @@ type NodeRmdirer interface {
 
 // Rename should move a child from one directory to a different
 // one. The change is effected in the FS tree if the return status is
-// OK. Default is to return ENOTSUP.
+// OK. Return what you want to change the name to, or use newName, what request
+// was to rename to. Default is to return ENOTSUP.
 type NodeRenamer interface {
-	Rename(ctx context.Context, name string, newParent InodeEmbedder, newName string, flags uint32) syscall.Errno
+	Rename(ctx context.Context, name string, newParent InodeEmbedder, newName string, flags uint32) (syscall.Errno, string)
 }
 
 // FileHandle is a resource identifier for opened files. Usually, a

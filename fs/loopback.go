@@ -200,7 +200,7 @@ func (n *LoopbackNode) Unlink(ctx context.Context, name string) syscall.Errno {
 
 var _ = (NodeRenamer)((*LoopbackNode)(nil))
 
-func (n *LoopbackNode) Rename(ctx context.Context, name string, newParent InodeEmbedder, newName string, flags uint32) syscall.Errno {
+func (n *LoopbackNode) Rename(ctx context.Context, name string, newParent InodeEmbedder, newName string, flags uint32) (syscall.Errno, string) {
 	if flags&RENAME_EXCHANGE != 0 {
 		return n.renameExchange(name, newParent, newName)
 	}
